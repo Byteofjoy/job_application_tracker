@@ -1,0 +1,63 @@
+
+{% extends "applications/base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+<div class="auth-container">
+
+    <div class="auth-card">
+
+        <h1>Welcome Back</h1>
+
+        <p class="auth-subtitle">
+            Log in to manage your job applications.
+        </p>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="form-errors">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <div class="form-group">
+
+                <label for="id_username">
+                    Username
+                </label>
+
+                {{ form.username }}
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="id_password">
+                    Password
+                </label>
+
+                {{ form.password }}
+
+            </div>
+
+            <button type="submit" class="btn-primary">
+                Login
+            </button>
+
+        </form>
+
+        <p class="auth-footer">
+            Don't have an account?
+            <a href="{% url 'register' %}">Create an account</a>
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}
+

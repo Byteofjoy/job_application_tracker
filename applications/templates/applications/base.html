@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}Job Application Tracker{% endblock %}
+    </title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            color: #1f2937;
+        }
+
+        /* Navigation */
+
+        .navbar {
+            background: #111827;
+            color: white;
+            padding: 15px 30px;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #d1d5db;
+            text-decoration: none;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .add-link {
+            background: #2563eb;
+            color: white !important;
+            padding: 8px 14px;
+            border-radius: 5px;
+        }
+
+        /* Main */
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Mobile */
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 15px;
+            }
+
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+        }
+    .auth-container {
+    max-width: 450px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+.auth-card {
+    background: white;
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.auth-card h1 {
+    margin-bottom: 8px;
+}
+
+.auth-subtitle {
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.form-control {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.field-error,
+.form-errors {
+    color: #dc2626;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.profile-container {
+    max-width: 650px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.profile-card {
+    background: white;
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 30px;
+}
+
+.profile-avatar {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #2563eb;
+    color: white;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.profile-header h1 {
+    margin: 0;
+}
+
+.profile-header p {
+    margin: 5px 0 0;
+    color: #666;
+}
+
+.profile-details {
+    border-top: 1px solid #eee;
+}
+
+.profile-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 18px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.profile-item span {
+    color: #666;
+}
+
+.profile-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.btn-secondary {
+    display: inline-block;
+    padding: 12px 18px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    text-decoration: none;
+}
+
+@media (max-width: 600px) {
+
+    .profile-actions {
+        flex-direction: column;
+    }
+
+    .profile-item {
+        flex-direction: column;
+        gap: 5px;
+    }
+}
+
+    </style>
+
+    {% block extra_css %}{% endblock %}
+
+</head>
+
+
+<body>
+
+    <nav class="navbar">
+
+    <div class="nav-container">
+
+        <a href="{% url 'application_list' %}" class="brand">
+            JobTrack
+        </a>
+
+        <div class="nav-links">
+
+            {% if user.is_authenticated %}
+            <a href="{% url 'profile' %}">
+    My Account
+</a>
+
+                <a href="{% url 'application_list' %}">
+                    Dashboard
+                </a>
+
+                <a href="{% url 'application_create' %}">
+                    + Add Application
+                </a>
+
+                <span class="welcome">
+                    Hi, {{ user.username }}
+                </span>
+
+                <form method="POST"
+                      action="{% url 'logout' %}"
+                      style="display: inline;">
+                    {% csrf_token %}
+
+                    <button type="submit" class="logout-btn">
+                        Logout
+                    </button>
+                </form>
+
+            {% else %}
+
+                <a href="{% url 'login' %}">
+                    Login
+                </a>
+
+                <a href="{% url 'register' %}">
+                    Register
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+    <main class="container">
+
+        {% block content %}
+
+        {% endblock %}
+
+    </main>
+
+</body>
+
+</html>

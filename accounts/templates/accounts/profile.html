@@ -1,0 +1,69 @@
+
+{% extends "applications/base.html" %}
+
+{% block title %}My Account{% endblock %}
+
+{% block content %}
+
+<div class="profile-container">
+
+    <div class="profile-card">
+
+        <div class="profile-header">
+            <div class="profile-avatar">
+                {{ user.username|first|upper }}
+            </div>
+
+            <div>
+                <h1>{{ user.username }}</h1>
+                <p>JobTrack Account</p>
+            </div>
+        </div>
+
+        <div class="profile-details">
+
+            <div class="profile-item">
+                <span>Username</span>
+                <strong>{{ user.username }}</strong>
+            </div>
+
+            <div class="profile-item">
+                <span>Email</span>
+                <strong>
+                    {{ user.email|default:"No email provided" }}
+                </strong>
+            </div>
+
+            <div class="profile-item">
+                <span>Applications</span>
+                <strong>{{ application_count }}</strong>
+            </div>
+
+            <div class="profile-item">
+                <span>Member since</span>
+                <strong>
+                    {{ user.date_joined|date:"F j, Y" }}
+                </strong>
+            </div>
+
+        </div>
+
+        <div class="profile-actions">
+
+            <a href="{% url 'application_list' %}"
+               class="btn-primary">
+                Back to Dashboard
+            </a>
+
+            <a href="{% url 'password_change' %}"
+               class="btn-secondary">
+                Change Password
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

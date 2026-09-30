@@ -1,0 +1,391 @@
+
+{% extends "applications/base.html" %}
+
+{% block title %}
+    {{ title|default:"Add Application" }}
+{% endblock %}
+
+{% block content %}
+
+<div class="form-page">
+
+    <div class="form-card">
+
+        <div class="form-header">
+            <h1>{{ title|default:"Add Application" }}</h1>
+
+            <p>
+                {% if title == "Edit Application" %}
+                    Update the details of this job application.
+                {% else %}
+                    Add a new job application to your tracker.
+                {% endif %}
+            </p>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="form-errors">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+
+            <!-- Application Information -->
+
+            <div class="form-section">
+
+                <h2>Application Information</h2>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label for="{{ form.company.id_for_label }}">
+                            Company
+                        </label>
+
+                        {{ form.company }}
+
+                        {% if form.company.errors %}
+                            <div class="field-error">
+                                {{ form.company.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="{{ form.job_title.id_for_label }}">
+                            Job Title
+                        </label>
+
+                        {{ form.job_title }}
+
+                        {% if form.job_title.errors %}
+                            <div class="field-error">
+                                {{ form.job_title.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="{{ form.location.id_for_label }}">
+                            Location
+                        </label>
+
+                        {{ form.location }}
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="{{ form.job_type.id_for_label }}">
+                            Job Type
+                        </label>
+
+                        {{ form.job_type }}
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="{{ form.application_date.id_for_label }}">
+                            Application Date
+                        </label>
+
+                        {{ form.application_date }}
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="{{ form.status.id_for_label }}">
+                            Status
+                        </label>
+
+                        {{ form.status }}
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="{{ form.priority.id_for_label }}">
+                            Priority
+                        </label>
+
+                        {{ form.priority }}
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="{{ form.salary.id_for_label }}">
+                            Salary
+                        </label>
+
+                        {{ form.salary }}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Job Link & Contact -->
+
+            <div class="form-section">
+
+                <h2>Job & Contact Information</h2>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label for="{{ form.job_url.id_for_label }}">
+                            Job URL
+                        </label>
+
+                        {{ form.job_url }}
+
+                        {% if form.job_url.errors %}
+                            <div class="field-error">
+                                {{ form.job_url.errors }}
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="{{ form.contact_person.id_for_label }}">
+                            Contact Person
+                        </label>
+
+                        {{ form.contact_person }}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Follow-up -->
+
+            <div class="form-section">
+
+                <h2>Follow-up & Interview</h2>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label for="{{ form.follow_up_date.id_for_label }}">
+                            Follow-up Date
+                        </label>
+
+                        {{ form.follow_up_date }}
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="{{ form.interview_date.id_for_label }}">
+                            Interview Date
+                        </label>
+
+                        {{ form.interview_date }}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Notes -->
+
+            <div class="form-section">
+
+                <h2>Notes</h2>
+
+                <div class="form-group">
+
+                    <label for="{{ form.notes.id_for_label }}">
+                        Notes
+                    </label>
+
+                    {{ form.notes }}
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="{{ form.interview_notes.id_for_label }}">
+                        Interview Notes
+                    </label>
+
+                    {{ form.interview_notes }}
+
+                </div>
+
+            </div>
+
+
+            <!-- Buttons -->
+
+            <div class="form-actions">
+
+                <button
+                    type="submit"
+                    class="btn-primary">
+                    {% if title == "Edit Application" %}
+                        Update Application
+                    {% else %}
+                        Save Application
+                    {% endif %}
+                </button>
+
+                <a
+                    href="{% url 'application_list' %}"
+                    class="btn-secondary">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block extra_css %}
+
+<style>
+
+.form-page {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.form-card {
+    background: white;
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.form-header {
+    margin-bottom: 30px;
+}
+
+.form-header h1 {
+    margin-bottom: 8px;
+}
+
+.form-header p {
+    color: #666;
+    margin: 0;
+}
+
+.form-section {
+    margin-bottom: 35px;
+}
+
+.form-section h2 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.form-group {
+    margin-bottom: 5px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: 600;
+}
+
+.form-control {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 11px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    background: white;
+}
+
+textarea.form-control {
+    resize: vertical;
+}
+
+.form-actions {
+    display: flex;
+    gap: 12px;
+    padding-top: 10px;
+}
+
+.form-actions .btn-primary {
+    width: auto;
+}
+
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #333;
+    background: white;
+}
+
+.field-error,
+.form-errors {
+    color: #dc2626;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+@media (max-width: 700px) {
+
+    .form-card {
+        padding: 20px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions button,
+    .form-actions a {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+</style>
+
+{% endblock %}
+
